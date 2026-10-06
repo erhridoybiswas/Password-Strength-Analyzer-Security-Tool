@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Password Strength Analyzer &amp; Security Suggestion Tool</title>
+<link rel="stylesheet" href="css/style.css" />
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+</head>
+<body>
+
+<header class="site-header">
+  <h1>🔐 Password Strength Analyzer</h1>
+  <p class="subtitle">
+    Privacy-focused analysis — passwords are processed in memory and never stored.
+  </p>
+</header>
+
+<main class="container">
+
+  <!-- ============ ANALYZER ============ -->
+  <section class="card">
+    <h2>Analyze a Password</h2>
+
+    <div class="field-row">
+      <input
+        type="password"
+        id="passwordInput"
+        placeholder="Enter a password (use a synthetic one for demos)"
+        autocomplete="new-password"
+        spellcheck="false"
+        maxlength="256"
+      />
+      <button id="toggleVisibility" type="button" class="btn-secondary">👁 Show</button>
+    </div>
+
+    <div class="meter-wrap">
+      <div class="meter-bar"><div id="meterFill" class="meter-fill"></div></div>
+      <div class="meter-meta">
+        <span id="classificationLabel">—</span>
+        <span id="scoreLabel">0/100</span>
+      </div>
+    </div>
+
+    <details class="context-box">
+      <summary>Optional: personal context (never stored)</summary>
+      <div class="context-grid">
+        <input type="text" id="ctxName"   placeholder="Demo first name" />
+        <input type="text" id="ctxYear"   placeholder="Demo birth year" />
+        <input type="text" id="ctxOrg"    placeholder="Demo company/college" />
+      </div>
+      <p class="hint">This is compared locally only. Do not enter real personal data.</p>
+    </details>
+  </section>
+
+  <!-- ============ FINDINGS / SUGGESTIONS ============ -->
+  <div class="grid-2">
+    <section class="card">
+      <h2>Findings</h2>
+      <ul id="findingsList" class="list"><li class="muted">Waiting for input…</li></ul>
+    </section>
+
+    <section class="card">
+      <h2>Security Suggestions</h2>
+      <ul id="suggestionsList" class="list"><li class="muted">Waiting for input…</li></ul>
+    </section>
+  </div>
+
+  <!-- ============ METRICS ============ -->
+  <div class="grid-2">
+    <section class="card">
+      <h2>Length &amp; Character Metrics</h2>
+      <table class="metrics-table" id="metricsTable">
+        <tbody><tr><td class="muted" colspan="2">No data yet.</td></tr></tbody>
+      </table>
+    </section>
+
+    <section class="card">
+      <h2>Entropy &amp; Policy</h2>
+      <table class="metrics-table" id="entropyTable">
+        <tbody><tr><td class="muted" colspan="2">No data yet.</td></tr></tbody>
+      </table>
+    </section>
+  </div>
+
+  <!-- ============ GENERATOR ============ -->
+  <section class="card">
+    <h2>Secure Password Generator</h2>
+    <p class="hint">Uses Python's <code>secrets</code> module (CSPRNG). Nothing is stored.</p>
+
+    <div class="gen-controls">
+      <label>Length
+        <select id="genLength">
+          <option value="16">16</option>
+          <option value="20" selected>20</option>
+          <option value="24">24</option>
+        </select>
+      </label>
+      <label><input type="checkbox" id="genUpper" checked /> Uppercase</label>
+      <label><input type="checkbox" id="genLower" checked /> Lowercase</label>
+      <label><input type="checkbox" id="genDigits" checked /> Numbers</label>
+      <label><input type="checkbox" id="genSymbols" checked /> Symbols</label>
+      <button id="generateBtn" class="btn-primary">Generate</button>
+      <button id="generatePhraseBtn" class="btn-secondary">Generate Passphrase</button>
+    </div>
+
+    <div class="gen-output">
+      <input type="text" id="generatedOutput" readonly placeholder="Generated result appears here" />
+      <button id="copyBtn" class="btn-secondary" type="button">Copy</button>
+    </div>
+    <p class="warn">⚠️ Demonstration examples — do not reuse them for real accounts.</p>
+  </section>
+
+  <!-- ============ DASHBOARD ============ -->
+  <section class="card">
+    <h2>Aggregate Analytics Dashboard</h2>
+    <p class="hint">Only aggregate metadata is stored. No password can ever appear here.</p>
+
+    <div class="stat-grid" id="statGrid"></div>
+
+    <div class="grid-2">
+      <div class="chart-box"><canvas id="chartStrength"></canvas></div>
+      <div class="chart-box"><canvas id="chartScore"></canvas></div>
+      <div class="chart-box"><canvas id="chartWeakness"></canvas></div>
+      <div class="chart-box"><canvas id="chartLength"></canvas></div>
+    </div>
+
+    <button id="refreshDashboard" class="btn-secondary">Refresh Dashboard</button>
+  </section>
+
+  <!-- ============ EDUCATION ============ -->
+  <section class="card">
+    <h2>10 Password Security Rules</h2>
+    <ol class="rules">
+      <li>Use a <strong>unique</strong> password for every account.</li>
+      <li>Prefer <strong>longer</strong> passwords or passphrases.</li>
+      <li>Avoid predictable personal information (names, years).</li>
+      <li>Avoid common passwords and top-1000 lists.</li>
+      <li>Never reuse passwords across sites.</li>
+      <li>Use a <strong>password manager</strong>.</li>
+      <li>Enable <strong>MFA</strong> wherever possible.</li>
+      <li>Never share your password — not even with "support".</li>
+      <li>Be cautious of phishing pages and lookalike domains.</li>
+      <li>Change passwords when compromise is suspected or confirmed.</li>
+    </ol>
+    <p class="hint">
+      Password strength is only one part of authentication security. Combine it with MFA,
+      rate limiting, secure hashing, session security and monitoring.
+    </p>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <p>
+    Defensive security tool · Passwords are never stored, logged or transmitted ·
+    Educational estimates only
+  </p>
+</footer>
+
+<script src="js/app.js"></script>
+</body>
+</html>
